@@ -1,8 +1,10 @@
+// Soal 1 Data Types
+
 package KasusAnalisis;
 import java.util.Scanner;
 import java.math.BigInteger;
 
-public class DataTypeSolver {
+public class DataTypes {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int T = sc.nextInt();

@@ -1,3 +1,4 @@
+// Soal 2 VARIABLES
 package KasusAnalisis;
 public class Constants {
     public static void main(String[] args) {

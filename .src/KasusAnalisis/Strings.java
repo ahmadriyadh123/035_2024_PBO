@@ -1,8 +1,10 @@
+// Soal 5 Strings
+
 package KasusAnalisis;
 import java.io.*;
 import java.util.*;
 
-public class Solution {
+public class Strings {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String A = sc.next(); // Input string pertama
