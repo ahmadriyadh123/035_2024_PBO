@@ -55,6 +55,7 @@ public class Pujasera {
         }
         System.out.println("===== Daftar Minuman ====");
         for (int i = 0; i < daftarMinuman.length; i++) {
+
             System.out.printf("%d. %s - Rp%,.0f\n", i + 1 + daftarMakanan.length, daftarMinuman[i].getNama(), daftarMinuman[i].getHarga());
         }
         System.out.println("=========================");
@@ -89,11 +90,17 @@ public class Pujasera {
             if (pilihan >= 1 && pilihan <= daftarMakanan.length) {
                 Makanan makanan = daftarMakanan[pilihan - 1];
                 totalHarga += makanan.getHarga();
-                pesanan.append(makanan.getNama()).append(" (Rp").append(String.format("%,.0f", makanan.getHarga())).append("), ");
+                pesanan.append(makanan.getNama())
+                       .append(" (Rp")
+                       .append(String.format("%,.0f", makanan.getHarga()))
+                       .append("), ");
             } else if (pilihan > daftarMakanan.length && pilihan <= daftarMakanan.length + daftarMinuman.length) {
                 Minuman minuman = daftarMinuman[pilihan - daftarMakanan.length - 1];
                 totalHarga += minuman.getHarga();
-                pesanan.append(minuman.getNama()).append(" (Rp").append(String.format("%,.0f", minuman.getHarga())).append("), ");
+                pesanan.append(minuman.getNama())
+                       .append(" (Rp")
+                       .append(String.format("%,.0f", minuman.getHarga()))
+                       .append("), ");
             } else {
                 System.out.println("Nomor menu tidak valid: " + pilihan);
                 return;

@@ -1,69 +1,12 @@
+package id.ac.polban;
+
+import id.ac.polban.model.Dokter;
+import id.ac.polban.model.Pasien;
+import id.ac.polban.service.JadwalService;
+import java.util.List;
 import java.util.Scanner;
 
-class Dokter {
-    private String nama;
-    private String spesialis;
-    private String[] hari;
-    private String jam;
-
-    public Dokter(String nama, String spesialis, String[] hari, String jam) {
-        this.nama = nama;
-        this.spesialis = spesialis;
-        this.hari = hari;
-        this.jam = jam;
-    }
-
-    public String getNama() {
-        return nama;
-    }
-
-    public String getSpesialis() {
-        return spesialis;
-    }
-
-    public String[] getHari() {
-        return hari;
-    }
-
-    public String getJam() {
-        return jam;
-    }
-
-    public boolean praktikDiHari(String hariKunjungan) {
-        for (String h : hari) {
-            if (h.equalsIgnoreCase(hariKunjungan)) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
-
-class StatusPasien {
-    private String namaPasien;
-    private String keluhan;
-    private String status;
-
-    public StatusPasien(String namaPasien, String keluhan, String status) {
-        this.namaPasien = namaPasien;
-        this.keluhan = keluhan;
-        this.status = status;
-    }
-
-    public String getNamaPasien() {
-        return namaPasien;
-    }
-
-    public String getKeluhan() {
-        return keluhan;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-}
-
-public class Rsakit {
+public class App {
     public static void main(String[] args) {
         Dokter[] daftarDokter = {
             new Dokter("Dr. Rudi", "Penyakit Jantung", new String[]{"Senin", "Kamis"}, "10:30"),
@@ -108,12 +51,13 @@ public class Rsakit {
 
                     System.out.println("\nSpesialisasi yang tersedia di hari " + hariKunjungan + ":");
                     boolean adaSpesialis = false;
-                    for (Dokter d : daftarDokter) {
-                        if (d.praktikDiHari(hariKunjungan)) {
-                            System.out.println("- " + d.getSpesialis());
+                    List<Dokter> dokterPraktikHariIni = JadwalService.getDokterPraktik(hariKunjungan);
+                    if (!dokterPraktikHariIni.isEmpty()) {
+                        for (Dokter d : dokterPraktikHariIni) {
+                            System.out.println("- " + d.getSpesialis() + " (Dr. " + d.getNama() + ", Jam: " + d.getJam() + ")");
                             adaSpesialis = true;
                         }
-                    }
+                    }     
                     if (!adaSpesialis) {
                         System.out.println("Tidak ada spesialisasi yang praktik di hari tersebut.");
                         break; // Kembali ke menu utama
@@ -127,15 +71,8 @@ public class Rsakit {
                     System.out.print("Pilih spesialisasi yang ingin dituju: ");
                     String spesialisTujuan = scanner.nextLine();
 
-                    StatusPasien status = new StatusPasien(namaPasien, keluhan, "Belum Diperiksa");
-
-                    Dokter dokterPilihan = null;
-                    for (Dokter d : daftarDokter) {
-                        if (d.getSpesialis().equalsIgnoreCase(spesialisTujuan) && d.praktikDiHari(hariKunjungan)) {
-                            dokterPilihan = d;
-                            break;
-                        }
-                    }
+                    Pasien status = new Pasien(namaPasien, keluhan);
+                    Dokter dokterPilihan = JadwalService.cariDokter(spesialisTujuan, hariKunjungan);
                     System.out.println("==============================");
                     System.out.println("==============================");
                     System.out.println("===Hasil Pengecekan Praktik===");
